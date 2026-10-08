@@ -72,7 +72,17 @@ const qtext=i=>Q[i][1].replace(/\{(\d)\}/g,(_,n)=>names[n]);
 const link=()=>location.href.split('?')[0]+'?room='+code;
 function send(o){try{conn&&conn.open&&conn.send(o)}catch(e){}}
 function sync(){send({t:'state',name:myName,ans:mine})}
-function beep(ok){if(!sound)return;try{const c=new (window.AudioContext||window.webkitAudioContext)(),o=c.createOscillator(),g=c.createGain();o.connect(g);g.connect(c.destination);g.gain.value=.12;o.type=ok?'sine':'sawtooth';const t=c.currentTime;if(ok){o.frequency.setValueAtTime(523,t);o.frequency.setValueAtTime(784,t+.15);o.frequency.setValueAtTime(1046,t+.3);o.stop(t+.6)}else{for(let k=0;k<4;k++)o.frequency.setValueAtTime(k%2?600:900,t+k*.2);o.stop(t+.8)}o.start()}catch(e){}}
+function mkWav(seq,type){const sr=22050;let n=0;seq.forEach(x=>n+=Math.floor(sr*x[1]));const b=new ArrayBuffer(44+n*2),d=new DataView(b);const w=(o,t)=>{for(let i=0;i<t.length;i++)d.setUint8(o+i,t.charCodeAt(i))};
+ w(0,'RIFF');d.setUint32(4,36+n*2,true);w(8,'WAVEfmt ');d.setUint32(16,16,true);d.setUint16(20,1,true);d.setUint16(22,1,true);d.setUint32(24,sr,true);d.setUint32(28,sr*2,true);d.setUint16(32,2,true);d.setUint16(34,16,true);w(36,'data');d.setUint32(40,n*2,true);
+ let p=44,ph=0;seq.forEach(([f,t])=>{const m=Math.floor(sr*t);for(let i=0;i<m;i++){ph+=2*Math.PI*f/sr;let y=type==='sq'?(Math.sin(ph)>0?1:-1)*.6:Math.sin(ph);const env=Math.min(1,i/200,(m-i)/400);d.setInt16(p,y*env*0.5*32767,true);p+=2}});
+ return URL.createObjectURL(new Blob([b],{type:'audio/wav'}))}
+const A={g:new Audio(mkWav([[523,.15],[659,.15],[784,.15],[1046,.3]],'sin')),r:new Audio(mkWav([[900,.2],[600,.2],[900,.2],[600,.2],[900,.2]],'sq'))};
+A.g.preload=A.r.preload='auto';
+let unlocked=false;
+function unlock(){if(unlocked)return;unlocked=true;Object.values(A).forEach(a=>{a.muted=true;a.play().then(()=>{a.pause();a.currentTime=0;a.muted=false}).catch(()=>{a.muted=false;unlocked=false})})}
+['pointerdown','touchstart','click','keydown'].forEach(e=>document.addEventListener(e,unlock,{passive:true}));
+function beep(ok){try{navigator.vibrate&&navigator.vibrate(ok?[120]:[200,100,200,100,200])}catch(e){}
+ if(!sound)return;const a=ok?A.g:A.r;try{a.currentTime=0;a.muted=false;a.volume=1;a.play().catch(()=>{})}catch(e){}}
 function setConn(c){
  conn=c;
  c.on('open',()=>{status='connected';stage='play';sync();render()});
@@ -127,11 +137,11 @@ function render(){
   <button class="btn" id="nx" style="margin-top:10px">${v==Q.length-1?'See final overview 🎉':'Next question →'}</button></div>`;
   if(shown!==v){shown=v;beep(ok)}}
  app.innerHTML=h+rst();bind()}
-function rst(){return `<button class="btn s" id="snd">${sound?'🔊 Sound on':'🔇 Sound off'}</button><button class="btn s" id="rs">↺ Restart game (both players)</button>`}
+function rst(){return `<div class="row"><button class="btn s" id="snd">${sound?'🔊 Sound on':'🔇 Sound off'}</button><button class="btn s" id="t1">▶ Test 💚</button><button class="btn s" id="t2">▶ Test 🚨</button></div><button class="btn s" id="rs">↺ Restart game (both players)</button>`}
 function bind(){
  document.querySelectorAll('.opt').forEach(b=>b.onclick=()=>{mine[v]=+b.dataset.k;sync();render()});
  const nx=document.getElementById('nx');if(nx)nx.onclick=()=>{v++;render()};
- document.getElementById('snd').onclick=()=>{sound=!sound;render()};
+ document.getElementById('snd').onclick=()=>{sound=!sound;render()};document.getElementById('t1').onclick=()=>{const o=sound;sound=true;beep(true);sound=o};document.getElementById('t2').onclick=()=>{const o=sound;sound=true;beep(false);sound=o};
  document.getElementById('rs').onclick=()=>{if(!confirm('Restart for both of you?'))return;mine={};theirs={};v=0;shown=-1;send({t:'restart'});render()}}
 function summary(){
  let m=0,both=0,rows='';
