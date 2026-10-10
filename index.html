@@ -1,7 +1,6 @@
 <!DOCTYPE html>
 <html lang="en"><head><meta charset="utf-8"><title>Rapid Fire ❤️</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<script src="https://cdn.jsdelivr.net/npm/peerjs@1.5.4/dist/peerjs.min.js"></script>
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700;800&display=swap" rel="stylesheet">
 <style>
 :root{--g:#22d3a0;--r:#ff4d5e;--bg:#0f1226;--bg2:#1a1740;--card:#191d3a;--tx:#eef0ff;--mu:#9aa0c9;--ac:#ffb84d;--ac2:#ff8a3d;--bd:#2c3260;--on:#1a1200}
@@ -38,7 +37,7 @@ input{font:inherit;width:100%;padding:12px;border-radius:12px;border:1.5px solid
 .rv{border-left:4px solid var(--bd);padding:9px 12px;margin:8px 0;font-size:13px;background:rgba(127,127,127,.1);border-radius:10px}.rv.g{border-color:var(--g)}.rv.r{border-color:var(--r)}
 .big{font-size:46px;font-weight:800;text-align:center;color:var(--ac)}
 .tag{display:inline-block;font-size:12px;color:var(--mu);margin-bottom:6px}
-.code{font-size:34px;font-weight:800;letter-spacing:.2em;text-align:center;color:var(--ac);margin:8px 0}
+.code{font-size:28px;font-weight:800;letter-spacing:.15em;text-align:center;color:var(--ac);margin:8px 0}
 .st{text-align:center;font-size:12px;color:var(--mu);margin-top:6px}
 </style></head><body><div class="w"><h1>❤️ Rapid Fire</h1><div class="sub" id="sub">Two players · live · same time</div><div class="themes" id="th"></div><div id="app"></div></div>
 <script>
@@ -65,16 +64,60 @@ const Q=[
 ["🥹 Deep Round","First message date?",["20.10.2025","10.05.2025","08.04.25","04.05.25"]],
 ["💌 Memory Round","When did {1} first say “I love you”?",["JAN 25","FEB 4","JAN 23","FEB 14"]],
 ["💌 Memory Round","When did we first message each other?",["22 SEP","AUG 23","SEP 23","AUG 20"]],
-["💌 Memory Round","When did {2} realize she really liked {1}?",["From our very first chat","After a few weeks of talking","The first time we spoke on a call","I don't know, it just happened ❤️"]]
+["💌 Memory Round","When did {2} realize she really liked {1}?",["From our very first chat","After a few weeks of talking","The first time we spoke on a call","I don't know, it just happened ❤️"]],
+["🔥 Spicy Round (18+)","If our trip is 5 days, how many times will we have sex?",["2","4","6","10"],{num:1,unit:" times"}],
+["🔥 Spicy Round (18+)","If our trip is 5 days or more, how many times will we do it without a condom?",["0","1","3","5"],{num:1,unit:" times"}],
+["🔥 Spicy Round (18+)","What's your favorite position?",["Missionary","Cowgirl","Spooning","Doggy style","Standing","Surprise me 😏"]],
+["🌶️ Fantasy Round (18+)","Where is your favorite place to be kissed?",["Lips","Neck","Ears","Everywhere 😏"]],
+["🌶️ Fantasy Round (18+)","Who would take the lead?",["{1}","{2}","We take turns","Depends on the mood"]],
+["🌶️ Fantasy Round (18+)","Who is more likely to make the first move?",["{1}","{2}","Both at once","Whoever can't wait longer 😂"]],
+["🌶️ Fantasy Round (18+)","Slow and romantic, or wild and passionate?",["Slow and romantic","Wild and passionate","A mix of both","Depends on the day"]],
+["🌶️ Fantasy Round (18+)","How many hours would we stay in bed on our first day together?",["2","5","8","12"],{num:1,unit:" hours"}],
+["🌶️ Fantasy Round (18+)","How many kisses in the first minute after we meet?",["5","10","20","50"],{num:1,unit:" kisses"}],
+["🌶️ Fantasy Round (18+)","What gets you in the mood fastest?",["Sweet words","Touch","A surprise","A really good kiss"]],
+["🌶️ Fantasy Round (18+)","Best time of day for us?",["Morning","Afternoon","Night","Whenever we can 😏"]],
+["🌶️ Fantasy Round (18+)","Which fantasy sounds the most fun?",["Role-play","A surprise hotel getaway","Blindfold and teasing games","Shower together"]],
+["🌶️ Fantasy Round (18+)","Would you try role-play together?",["Yes!","Maybe, if we're both comfortable","Not really","Let's talk about it first"]],
+["🌶️ Fantasy Round (18+)","Would you try a blindfold or teasing game?",["Yes!","Maybe, if we're both comfortable","Not really","Let's talk about it first"]],
+["🌶️ Fantasy Round (18+)","What's one fantasy we should talk about openly?",["Role-play","Something new and adventurous","A romantic fantasy","I'm too shy to say 😂"]],
+["🌶️ Fantasy Round (18+)","Which setting sounds like the best fantasy?",["Luxury hotel suite","Beach villa at night","Cozy cabin in the mountains","A private rooftop view"]],
+["🌶️ Fantasy Round (18+)","Dream first night together?",["Romantic dinner, then bed","Straight to bed 😏","Dance together, then bed","Long talk, then bed"]],
+["🌶️ Fantasy Round (18+)","Would you try a “strangers meeting at a bar” role-play?",["Yes!","Maybe, if we're both comfortable","Not really","Let's talk about it first"]],
+["🌶️ Fantasy Round (18+)","Would you like a special outfit surprise?",["Yes please 😏","Maybe","Not really","Let's choose it together"]],
+["🌶️ Fantasy Round (18+)","Which turns you on the most?",["Whispers in my ear","Slow touches","Intense eye contact","A long kiss"]],
+["🌶️ Fantasy Round (18+)","How many minutes of foreplay is perfect?",["10","20","30","60"],{num:1,unit:" minutes"}],
+["🌶️ Fantasy Round (18+)","Who is more adventurous in bed?",["{1}","{2}","Both","Neither 😂"]],
+["🌶️ Fantasy Round (18+)","Lights on or off?",["On","Off","Candlelight","Doesn't matter"]],
+["🌶️ Fantasy Round (18+)","Would you try something completely new on our trip?",["Yes!","Maybe, if we're both comfortable","Not sure","Let's decide together"]],
+["🌶️ Fantasy Round (18+)","After a spicy night, what do we do?",["Cuddle","Talk for hours","Sleep instantly","Snacks 😂"]]
 ];
 const app=document.getElementById('app');
-let peer=null,conn=null,me=0,myName='',names={1:'Player 1',2:'Player 2'},mine={},theirs={},v=0,shown=-1,sound=true,stage='setup',code='',status='',err='';
+let es=null,hb=null,epoch=0,seen=false,tries=0,opened=false,me=0,myName='',names={1:'Player 1',2:'Player 2'},mine={},theirs={},v=0,shown=-1,sound=true,stage='setup',code='',status='',err='';
 const other=()=>me==1?2:1;
 const opt=(i,k,viewer)=>Q[i][2][k].replace(/\{(\d)\}/g,(_,n)=>names[n]+(n==viewer?' (me)':''));
+const isNum=i=>!!(Q[i][3]&&Q[i][3].num);
+const show=(i,val,viewer)=>isNum(i)?val+Q[i][3].unit:'ABCDEFG'[val]+') '+opt(i,val,viewer);
 const qtext=i=>Q[i][1].replace(/\{(\d)\}/g,(_,n)=>names[n]);
 const link=()=>location.href.split('?')[0]+'?room='+code;
-function send(o){try{conn&&conn.open&&conn.send(o)}catch(e){}}
-function sync(){send({t:'state',name:myName,ans:mine})}
+const T=()=>'https://ntfy.sh/rapidfire-'+code;
+function send(o){o.slot=me;try{fetch(T(),{method:'POST',body:JSON.stringify(o)}).catch(()=>{})}catch(e){}}
+function sync(hello){send({t:'state',name:myName,ans:mine,echo:theirs,epoch:epoch,hello:!!hello})}
+function onMsg(d){
+ if(!d||d.slot!==other())return;
+ if(d.epoch>epoch){epoch=d.epoch;mine={};theirs={};v=0;shown=-1}
+ else if(d.epoch<epoch)return;
+ seen=true;clearInterval(hb);
+ theirs=d.ans||{};names[other()]=d.name||names[other()];
+ if(Object.keys(mine).length===0&&d.echo&&Object.keys(d.echo).length)mine=d.echo;
+ status='connected';stage='play';
+ if(d.hello)sync(false);
+ render()}
+function connect(){
+ seen=false;opened=false;
+ es=new EventSource(T()+'/sse');
+ es.onopen=()=>{if(opened)return;opened=true;sync(true);tries=0;clearInterval(hb);
+  hb=setInterval(()=>{if(seen)return clearInterval(hb);if(++tries>12){clearInterval(hb);if(stage==='joining'){err='Could not reach your partner. Check the code and ask them to keep the page open, then try again.';stage='setup';render()}return}sync(true)},4000)};
+ es.onmessage=e=>{try{const m=JSON.parse(e.data);if(m.event==='message')onMsg(JSON.parse(m.message))}catch(x){}}}
 function mkWav(seq,type){const sr=22050;let n=0;seq.forEach(x=>n+=Math.floor(sr*x[1]));const b=new ArrayBuffer(44+n*2),d=new DataView(b);const w=(o,t)=>{for(let i=0;i<t.length;i++)d.setUint8(o+i,t.charCodeAt(i))};
  w(0,'RIFF');d.setUint32(4,36+n*2,true);w(8,'WAVEfmt ');d.setUint32(16,16,true);d.setUint16(20,1,true);d.setUint16(22,1,true);d.setUint32(24,sr,true);d.setUint32(28,sr*2,true);d.setUint16(32,2,true);d.setUint16(34,16,true);w(36,'data');d.setUint32(40,n*2,true);
  let p=44,ph=0;seq.forEach(([f,t])=>{const m=Math.floor(sr*t);for(let i=0;i<m;i++){ph+=2*Math.PI*f/sr;let y=type==='sq'?(Math.sin(ph)>0?1:-1)*.6:Math.sin(ph);const env=Math.min(1,i/200,(m-i)/400);d.setInt16(p,y*env*0.5*32767,true);p+=2}});
@@ -86,31 +129,15 @@ function unlock(){if(unlocked)return;unlocked=true;Object.values(A).forEach(a=>{
 ['pointerdown','touchstart','click','keydown'].forEach(e=>document.addEventListener(e,unlock,{passive:true}));
 function beep(ok){try{navigator.vibrate&&navigator.vibrate(ok?[120]:[200,100,200,100,200])}catch(e){}
  if(!sound)return;const a=ok?A.g:A.r;try{a.currentTime=0;a.muted=false;a.volume=1;a.play().catch(()=>{})}catch(e){}}
-function setConn(c){
- conn=c;
- c.on('open',()=>{status='connected';stage='play';sync();render()});
- c.on('data',d=>{
-  if(d.t==='state'){theirs=d.ans||{};names[other()]=d.name||names[other()];if(stage!=='play')stage='play';render()}
-  if(d.t==='restart'){mine={};theirs={};v=0;shown=-1;sync();render()}});
- c.on('close',()=>{status='disconnected';render()});
- c.on('error',()=>{status='disconnected';render()});
-}
 function host(){
  myName=document.getElementById('nm').value.trim()||'Player 1';me=1;names[1]=myName;
- code=Math.random().toString(36).slice(2,7).toUpperCase().replace(/[IO01]/g,'X');
- peer=new Peer('rapidfire-'+code);
- peer.on('open',()=>{stage='lobby';render()});
- peer.on('connection',c=>setConn(c));
- peer.on('error',e=>{err=e.type==='unavailable-id'?'Code clash, try again.':'Connection problem: '+e.type;stage='setup';render()});
-}
+ code=Array.from(crypto.getRandomValues(new Uint8Array(8)),x=>'ABCDEFGHJKLMNPQRSTUVWXYZ23456789'[x%32]).join('');
+ stage='lobby';connect();render()}
 function join(c0){
  const nm=document.getElementById('nm');myName=(nm&&nm.value.trim())||'Player 2';me=2;names[2]=myName;
- code=(c0||document.getElementById('cd').value).trim().toUpperCase();if(!code){err='Enter the room code.';render();return}
- stage='joining';render();
- peer=new Peer();
- peer.on('open',()=>setConn(peer.connect('rapidfire-'+code,{reliable:true})));
- peer.on('error',e=>{err=e.type==='peer-unavailable'?'Room not found. Check the code and make sure Player 1 has the page open.':'Connection problem: '+e.type;stage='setup';render()});
-}
+ code=(c0||document.getElementById('cd').value).trim().toUpperCase().replace(/[^A-Z0-9]/g,'');
+ if(code.length<6){err='Enter the full room code.';render();return}
+ err='';stage='joining';connect();render()}
 function render(){
  const sub=document.getElementById('sub');
  if(stage==='setup'){
@@ -125,31 +152,34 @@ function render(){
   app.innerHTML=`<div class="card"><div class="sec">Room ready</div><div class="code">${code}</div><div class="wait">⏳ Waiting for your partner to join…</div>
   <button class="btn" id="cp">Copy invite link</button><div class="st">Send her the link, or the code above.</div></div>`;
   document.getElementById('cp').onclick=async()=>{try{if(navigator.share)await navigator.share({title:'Rapid Fire ❤️',text:'Join my game!',url:link()});else{await navigator.clipboard.writeText(link());alert('Link copied!')}}catch(e){prompt('Copy this link:',link())}};return}
- if(stage==='joining'){app.innerHTML='<div class="card wait">Connecting…</div>';return}
+ if(stage==='joining'){app.innerHTML=`<div class="card wait">Connecting to <b>${code}</b>…<br><small>Make sure your partner has the game open.</small></div>`;return}
  sub.textContent=`${names[1]} ❤️ ${names[2]}`;
  const dc=status==='disconnected'?'<div class="ans" style="color:var(--r);text-align:center">⚠️ Partner disconnected. Ask them to reopen the link.</div>':'';
  if(v>=Q.length){summary();return}
  const iA=mine[v]!==undefined,tA=theirs[v]!==undefined;
  let h=dc+`<div class="bar"><i style="width:${Math.round(v/Q.length*100)}%"></i></div><div class="card"><div class="sec">${Q[v][0]}</div><div class="tag">Question ${v+1} of ${Q.length}</div><div class="q">${qtext(v)}</div>`;
- if(!iA){Q[v][2].forEach((_,k)=>h+=`<button class="opt" data-k="${k}"><b>${'ABCD'[k]})</b> ${opt(v,k,me)}</button>`);h+='</div>'}
- else if(!tA){h+=`<div class="ans">Your answer: <b>${'ABCD'[mine[v]]}) ${opt(v,mine[v],me)}</b></div><div class="wait">⏳ Waiting for ${names[other()]} to answer…</div></div>`}
+ if(!iA){if(isNum(v)){Q[v][2].forEach((n,k)=>h+=`<button class="opt" data-n="${n}"><b>${'ABCDEFG'[k]})</b> ${n}${Q[v][3].unit}</button>`);
+   h+=`<div style="margin-top:4px"><b style="color:var(--ac)">${'ABCDEFG'[Q[v][2].length]})</b> Custom number</div><div class="row" style="margin-top:6px"><input id="cn" type="number" inputmode="numeric" min="0" max="999" step="1" placeholder="Type a number" style="margin:0"><button class="btn" id="cb" style="flex:0 0 auto;width:auto">OK</button></div></div>`}
+  else{Q[v][2].forEach((_,k)=>h+=`<button class="opt" data-k="${k}"><b>${'ABCDEFG'[k]})</b> ${opt(v,k,me)}</button>`);h+='</div>'}}
+ else if(!tA){h+=`<div class="ans">Your answer: <b>${show(v,mine[v],me)}</b></div><div class="wait">⏳ Waiting for ${names[other()]} to answer…</div></div>`}
  else{const ok=mine[v]===theirs[v];
   h+=`<div class="siren ${ok?'g':'r'}"></div><div class="res ${ok?'g':'r'}">${ok?'💚 Same answer! Match!':'🚨 Different answers!'}</div>
-  <div class="ans">${names[me]} (you): <b>${'ABCD'[mine[v]]}) ${opt(v,mine[v],me)}</b></div>
-  <div class="ans">${names[other()]}: <b>${'ABCD'[theirs[v]]}) ${opt(v,theirs[v],other())}</b></div>
+  <div class="ans">${names[me]} (you): <b>${show(v,mine[v],me)}</b></div>
+  <div class="ans">${names[other()]}: <b>${show(v,theirs[v],other())}</b></div>
   <button class="btn" id="nx" style="margin-top:10px">${v==Q.length-1?'See final overview 🎉':'Next question →'}</button></div>`;
   if(shown!==v){shown=v;beep(ok)}}
  app.innerHTML=h+rst();bind()}
 function rst(){return `<div class="row"><button class="btn s" id="snd">${sound?'🔊 Sound on':'🔇 Sound off'}</button><button class="btn s" id="t1">▶ Test 💚</button><button class="btn s" id="t2">▶ Test 🚨</button></div><button class="btn s" id="rs">↺ Restart game (both players)</button>`}
 function bind(){
- document.querySelectorAll('.opt').forEach(b=>b.onclick=()=>{mine[v]=+b.dataset.k;sync();render()});
+ document.querySelectorAll('.opt').forEach(b=>b.onclick=()=>{mine[v]=b.dataset.n!==undefined?+b.dataset.n:+b.dataset.k;sync();render()});
+ const cb=document.getElementById('cb');if(cb)cb.onclick=()=>{const raw=document.getElementById('cn').value.trim();if(!/^\d{1,3}$/.test(raw)){alert('Please type a whole number (0–999)');return}mine[v]=parseInt(raw,10);sync();render()};
  const nx=document.getElementById('nx');if(nx)nx.onclick=()=>{v++;render()};
  document.getElementById('snd').onclick=()=>{sound=!sound;render()};document.getElementById('t1').onclick=()=>{const o=sound;sound=true;beep(true);sound=o};document.getElementById('t2').onclick=()=>{const o=sound;sound=true;beep(false);sound=o};
- document.getElementById('rs').onclick=()=>{if(!confirm('Restart for both of you?'))return;mine={};theirs={};v=0;shown=-1;send({t:'restart'});render()}}
+ document.getElementById('rs').onclick=()=>{if(!confirm('Restart for both of you?'))return;mine={};theirs={};v=0;shown=-1;epoch++;sync(false);render()}}
 function summary(){
  let m=0,both=0,rows='';
  Q.forEach((q,i)=>{if(mine[i]===undefined||theirs[i]===undefined)return;both++;const ok=mine[i]===theirs[i];if(ok)m++;
-  rows+=`<div class="rv ${ok?'g':'r'}"><b>${i+1}. ${qtext(i)}</b><br>${names[me]}: ${opt(i,mine[i],me)}<br>${names[other()]}: ${opt(i,theirs[i],other())}<br>${ok?'💚 Match':'🚨 Different'}</div>`});
+  rows+=`<div class="rv ${ok?'g':'r'}"><b>${i+1}. ${qtext(i)}</b><br>${names[me]}: ${show(i,mine[i],me)}<br>${names[other()]}: ${show(i,theirs[i],other())}<br>${ok?'💚 Match':'🚨 Different'}</div>`});
  const p=both?Math.round(m/both*100):0;
  const msg=p>=80?'Soulmate sync! 💞':p>=60?'Beautifully in tune ❤️':p>=40?'Lots to talk about tonight 😄':'Opposites attract! Time for a long call 📞';
  const wait=both<Q.length?`<div class="wait">⏳ Waiting for ${names[other()]} to finish (${both}/${Q.length} compared)…</div>`:'';
