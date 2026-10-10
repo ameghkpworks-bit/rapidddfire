@@ -92,13 +92,14 @@ const Q=[
 ["🌶️ Fantasy Round (18+)","After a spicy night, what do we do?",["Cuddle","Talk for hours","Sleep instantly","Snacks 😂"]]
 ];
 const app=document.getElementById('app');
-let es=null,hb=null,epoch=0,seen=false,tries=0,opened=false,me=0,myName='',names={1:'Player 1',2:'Player 2'},mine={},theirs={},v=0,shown=-1,sound=true,stage='setup',code='',status='',err='';
+let relay='connecting',es=null,hb=null,epoch=0,seen=false,tries=0,opened=false,me=0,myName='',names={1:'Player 1',2:'Player 2'},mine={},theirs={},v=0,shown=-1,sound=true,stage='setup',code='',status='',err='';
 const other=()=>me==1?2:1;
 const opt=(i,k,viewer)=>Q[i][2][k].replace(/\{(\d)\}/g,(_,n)=>names[n]+(n==viewer?' (me)':''));
 const isNum=i=>!!(Q[i][3]&&Q[i][3].num);
 const show=(i,val,viewer)=>isNum(i)?val+Q[i][3].unit:'ABCDEFG'[val]+') '+opt(i,val,viewer);
 const qtext=i=>Q[i][1].replace(/\{(\d)\}/g,(_,n)=>names[n]);
 const link=()=>location.href.split('?')[0]+'?room='+code;
+const relayTxt=()=>relay==='ok'?'🟢 Server connected':relay==='error'?'🔴 Cannot reach the relay server. Check your internet, turn off VPN or ad-blocker, or switch between Wi-Fi and mobile data.':'🟡 Connecting to server…';
 const T=()=>'https://ntfy.sh/rapidfire-'+code;
 function send(o){o.slot=me;try{fetch(T(),{method:'POST',body:JSON.stringify(o)}).catch(()=>{})}catch(e){}}
 function sync(hello){send({t:'state',name:myName,ans:mine,echo:theirs,epoch:epoch,hello:!!hello})}
@@ -115,7 +116,8 @@ function onMsg(d){
 function connect(){
  seen=false;opened=false;
  es=new EventSource(T()+'/sse');
- es.onopen=()=>{if(opened)return;opened=true;sync(true);tries=0;clearInterval(hb);
+ es.onerror=()=>{relay='error';if(stage==='lobby'||stage==='joining')render()};
+ es.onopen=()=>{relay='ok';if(stage==='lobby'||stage==='joining')render();if(opened)return;opened=true;sync(true);tries=0;clearInterval(hb);
   hb=setInterval(()=>{if(seen)return clearInterval(hb);if(++tries>12){clearInterval(hb);if(stage==='joining'){err='Could not reach your partner. Check the code and ask them to keep the page open, then try again.';stage='setup';render()}return}sync(true)},4000)};
  es.onmessage=e=>{try{const m=JSON.parse(e.data);if(m.event==='message')onMsg(JSON.parse(m.message))}catch(x){}}}
 function mkWav(seq,type){const sr=22050;let n=0;seq.forEach(x=>n+=Math.floor(sr*x[1]));const b=new ArrayBuffer(44+n*2),d=new DataView(b);const w=(o,t)=>{for(let i=0;i<t.length;i++)d.setUint8(o+i,t.charCodeAt(i))};
@@ -149,10 +151,10 @@ function render(){
   <div class="st" style="margin:12px 0">— or join your partner —</div><input id="cd" placeholder="Room code" style="text-transform:uppercase"><button class="btn s" id="j">Join game (Player 2)</button>`}</div>`;
   document.getElementById('j').onclick=()=>join(urlRoom);const h=document.getElementById('h');if(h)h.onclick=host;return}
  if(stage==='lobby'){
-  app.innerHTML=`<div class="card"><div class="sec">Room ready</div><div class="code">${code}</div><div class="wait">⏳ Waiting for your partner to join…</div>
+  app.innerHTML=`<div class="card"><div class="sec">Room ready</div><div class="code">${code}</div><div class="wait">⏳ Waiting for your partner to join…</div><div class="st" style="margin-bottom:10px">${relayTxt()}</div>
   <button class="btn" id="cp">Copy invite link</button><div class="st">Send her the link, or the code above.</div></div>`;
   document.getElementById('cp').onclick=async()=>{try{if(navigator.share)await navigator.share({title:'Rapid Fire ❤️',text:'Join my game!',url:link()});else{await navigator.clipboard.writeText(link());alert('Link copied!')}}catch(e){prompt('Copy this link:',link())}};return}
- if(stage==='joining'){app.innerHTML=`<div class="card wait">Connecting to <b>${code}</b>…<br><small>Make sure your partner has the game open.</small></div>`;return}
+ if(stage==='joining'){app.innerHTML=`<div class="card wait">Connecting to <b>${code}</b>…<br><small>Make sure your partner has the game open.</small><div class="st" style="margin-top:8px">${relayTxt()}</div></div>`;return}
  sub.textContent=`${names[1]} ❤️ ${names[2]}`;
  const dc=status==='disconnected'?'<div class="ans" style="color:var(--r);text-align:center">⚠️ Partner disconnected. Ask them to reopen the link.</div>':'';
  if(v>=Q.length){summary();return}
